@@ -28,7 +28,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -62,15 +62,15 @@ public class App {
         // Connect to database
         a.connect();
         // Get Employee
-        Employee emp = a.getEmployee(255530);
+        City city = a.getCity(1);
         // Display results
-        a.displayEmployee(emp);
+        a.displayCity(city);
 
         // Disconnect from database
         a.disconnect();
     }
 
-    public Employee getEmployee(int ID)
+    public City getCity(int ID)
     {
         try
         {
@@ -78,20 +78,20 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT emp_no, first_name, last_name "
-                            + "FROM employees "
-                            + "WHERE emp_no = " + ID;
+                    "SELECT ID, Name, CountryCode "
+                            + "FROM city "
+                            + "WHERE ID = " + ID;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
             // Check one is returned
             if (rset.next())
             {
-                Employee emp = new Employee();
-                emp.emp_no = rset.getInt("emp_no");
-                emp.first_name = rset.getString("first_name");
-                emp.last_name = rset.getString("last_name");
-                return emp;
+                City citytest = new City();
+                citytest.city_no = rset.getInt("ID");
+                citytest.city_name = rset.getString("Name");
+                citytest.city_short = rset.getString("CountryCode");
+                return citytest;
             }
             else
                 return null;
@@ -103,19 +103,14 @@ public class App {
             return null;
         }
     }
-
-    public void displayEmployee(Employee emp)
+    public void displayCity(City city)
     {
-        if (emp != null)
+        if (city != null)
         {
             System.out.println(
-                    emp.emp_no + " "
-                            + emp.first_name + " "
-                            + emp.last_name + "\n"
-                            + emp.title + "\n"
-                            + "Salary:" + emp.salary + "\n"
-                            + emp.dept_name + "\n"
-                            + "Manager: " + emp.manager + "\n");
+                    city.city_no + " "
+                            + city.city_name + " "
+                            + city.city_short + "\n");
         }
     }
 }
