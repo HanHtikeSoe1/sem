@@ -12,7 +12,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,9 +26,9 @@ public class App {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(delay);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://"+ location +"/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -55,12 +55,15 @@ public class App {
     }
 
     public static void main(String[] args) {
-        // Create new Application
+        // Create new Application and connect to database
         App a = new App();
+        if (args.length < 1) {
+            a.connect("localhost:33060", 30000);
+        }else {
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
         Department dept = new Department();
 
-        // Connect to database
-        a.connect();
         // getSalariesByDepartment
         dept.dept_no = "d007";
         ArrayList<Employee> dept_test = a.getSalariesByDepartment(dept);
