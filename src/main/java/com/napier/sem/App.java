@@ -7,7 +7,7 @@ public class App {
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    public Connection con = null;
 
     /**
      * Connect to the MySQL database.
@@ -72,15 +72,15 @@ public class App {
         // Get Department
         ArrayList<Employee> data = a.getDepartment("d007");
         // Extract employee salary information
-        ArrayList<Employee> employees = a.getSalariesByTitles("Engineer");
+//        ArrayList<Employee> employees = a.getSalariesByTitles("Engineer");
         ArrayList<Employee> employees1 = a.getAllSalaries();
 
         // Display results
-        a.printSalaries(data);
-        a.printSalaries(dept_test);
-        a.printSalaries(employees);
-        a.displayEmployee(emp);
-        System.out.println(employees1.size());
+//        a.printSalaries(data);
+//        a.printSalaries(dept_test);
+        a.printSalaries(employees1);
+//        a.displayEmployee(emp);
+//        System.out.println(employees1.size());
 
 
         // Disconnect from database
@@ -102,7 +102,7 @@ public class App {
             // Check one is returned
             if (rset.next()) {
                 Employee emp = new Employee();
-                emp.emp_no = rset.getInt("emp_no");
+                emp.setEmp_no(rset.getInt("emp_no"));
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
                 return emp;
@@ -118,7 +118,7 @@ public class App {
     public void displayEmployee(Employee emp) {
         if (emp!=null) {
             System.out.println(
-                    emp.emp_no + " "
+                    emp.getEmp_no() + " "
                             + emp.first_name + " "
                             + emp.last_name + "\n"
                             + emp.title + "\n"
@@ -152,10 +152,10 @@ public class App {
             ArrayList<Employee> employees = new ArrayList<Employee>();
             while (rset.next()) {
                 Employee emp = new Employee();
-                emp.emp_no = rset.getInt("employees.emp_no");
-                emp.first_name = rset.getString("employees.first_name");
-                emp.last_name = rset.getString("employees.last_name");
-                emp.salary = rset.getInt("salaries.salary");
+                emp.setEmp_no(rset.getInt("employees.emp_no"));
+                emp.setFirst_name(rset.getString("employees.first_name"));
+                emp.setLast_name(rset.getString("employees.last_name"));
+                emp.setSalary(rset.getInt("salaries.salary"));
                 employees.add(emp);
             }
             return employees;
@@ -192,10 +192,10 @@ public class App {
             ArrayList<Employee> employees = new ArrayList<Employee>();
             while (rset.next()) {
                 Employee emp = new Employee();
-                emp.emp_no = rset.getInt("employees.emp_no");
-                emp.first_name = rset.getString("employees.first_name");
-                emp.last_name = rset.getString("employees.last_name");
-                emp.salary = rset.getInt("salaries.salary");
+                emp.setEmp_no(rset.getInt("employees.emp_no"));
+                emp.setFirst_name(rset.getString("employees.first_name"));
+                emp.setLast_name(rset.getString("employees.last_name"));
+                emp.setSalary(rset.getInt("salaries.salary"));
                 employees.add(emp);
             }
             return employees;
