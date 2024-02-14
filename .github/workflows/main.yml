@@ -80,9 +80,9 @@ jobs:
           files: |
             ./target/*.jar
       - name: Copy Output
-        run: docker container cp db:./tmp/reports ./
+        run: docker container cp semethods-db-1:./tmp/reports ./
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
-          branch: master
+          branch: reports
           folder: reports
