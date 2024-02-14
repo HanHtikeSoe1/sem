@@ -50,7 +50,7 @@ jobs:
           verbose: true # optional (default = false)
   build:
     name: Build Run in Docker and Deploy Release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
