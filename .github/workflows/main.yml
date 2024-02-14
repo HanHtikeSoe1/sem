@@ -6,16 +6,16 @@ on:
 jobs:
   UnitTests:
     name: Unit Tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.sem.AppTest test
@@ -24,21 +24,21 @@ jobs:
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
-          flags: UnitTests # optional
+          flags: Unit Tests # optional
           verbose: true # optional (default = false)
 
   IntegrationTests:
     name: Integration Tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
       - name: Integration Tests and CodeCov
         run: |
@@ -53,20 +53,20 @@ jobs:
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
-          flags: IntegrationTests # optional
+          flags: Integration Tests # optional
           verbose: true # optional (default = false)
   build:
     name: Build Run in Docker and Deploy Release
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
       - name: Package and Run docker compose
         run: |
