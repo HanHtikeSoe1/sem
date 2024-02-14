@@ -1,5 +1,9 @@
 package com.napier.sem;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -74,11 +78,12 @@ public class App {
         // Extract employee salary information
 //        ArrayList<Employee> employees = a.getSalariesByTitles("Engineer");
         ArrayList<Employee> employees1 = a.getAllSalaries();
+        a.outputEmployees(employees1, "AllSalaries.md");
 
         // Display results
 //        a.printSalaries(data);
 //        a.printSalaries(dept_test);
-        a.printSalaries(employees1);
+//        a.printSalaries(employees1);
 //        a.displayEmployee(emp);
 //        System.out.println(employees1.size());
 
@@ -297,6 +302,37 @@ public class App {
                     String.format("%-10s %-15s %-20s %-8s",
                             emp.emp_no, emp.first_name, emp.last_name, emp.salary);
             System.out.println(emp_string);
+        }
+    }
+    /**
+     * Outputs to markdown
+     *
+     * @param employees
+     */
+    public void outputEmployees(ArrayList<Employee> employees, String filename)
+    {
+        if (employees == null){
+            System.out.println("No employees");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Emp No | First Name | Last Name | Salary | \r\n");
+        sb.append("| --- | --- | --- | --- | \r\n");
+        //loop over all employess in the list
+        for (Employee emp : employees) {
+            if (emp == null) continue;
+            sb.append("| "+ emp.emp_no + " | " + emp.first_name + " | " + emp.last_name + " | " + emp.salary + " |\r\n");
+
+        }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/"+filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 }
