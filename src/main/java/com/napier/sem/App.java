@@ -304,35 +304,4 @@ public class App {
             System.out.println(emp_string);
         }
     }
-    /**
-     * Outputs to markdown
-     *
-     * @param employees
-     */
-    public void outputEmployees(ArrayList<Employee> employees, String filename)
-    {
-        if (employees == null){
-            System.out.println("No employees");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        // Print header
-        sb.append("| Emp No | First Name | Last Name | Salary | \r\n");
-        sb.append("| --- | --- | --- | --- | \r\n");
-        //loop over all employess in the list
-        for (Employee emp : employees) {
-            if (emp == null) continue;
-            sb.append("| "+ emp.emp_no + " | " + emp.first_name + " | " + emp.last_name + " | " + emp.salary + " |\r\n");
-
-        }
-        try {
-            new File("./reports/").mkdir();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/"+filename)));
-            writer.write(sb.toString());
-            writer.close();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 }
